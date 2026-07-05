@@ -126,7 +126,15 @@ walletButtons.forEach(btn => {
      }
 
       if (address) {
-        onWalletConnected(address);
+        const networkMap = {
+          phantom: 'solana',
+          solflare: 'solana',
+          backpack: 'solana',
+          metamask: 'base',
+          trustwallet: 'bnb',
+          coinbase: 'base',
+        };
+        onWalletConnected(address, wallet, networkMap[wallet]);
       }
 
     } catch (err) {
@@ -137,13 +145,25 @@ walletButtons.forEach(btn => {
 });
 
 // ===== ON SUCCESSFUL CONNECT =====
-function onWalletConnected(address) {
+function onWalletConnected(address, walletName, network) {
   closeModal();
   landingView.classList.add('hidden');
   dashboardView.classList.remove('hidden');
 
   const shortAddress = address.slice(0, 4) + '...' + address.slice(-4);
-  document.getElementById('walletPill').textContent = shortAddress;
+  document.getElementById('walletPillAddress').textContent = shortAddress;
+
+  fetch(`network-icons/${network}.svg`)
+    .then(res => res.text())
+    .then(svg => {
+      document.getElementById('walletPillNetwork').innerHTML = svg;
+    });
+
+  fetch(`wallet-icons/${walletName}.svg`)
+    .then(res => res.text())
+    .then(svg => {
+      document.getElementById('walletPillWallet').innerHTML = svg;
+    });
 
   populateDashboard(address);
 }
@@ -176,7 +196,9 @@ document.getElementById('copyBtn').addEventListener('click', () => {
 document.getElementById('disconnectBtn').addEventListener('click', () => {
   dashboardView.classList.add('hidden');
   landingView.classList.remove('hidden');
-  document.getElementById('walletPill').textContent = '—';
+  document.getElementById('walletPillAddress').textContent = '—';
+  document.getElementById('walletPillNetwork').innerHTML = '';
+  document.getElementById('walletPillWallet').innerHTML = '';
 });
 
 

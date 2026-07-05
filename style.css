@@ -297,6 +297,36 @@ body {
 }
 
 
+.wallet-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--cgi-bg-light);
+  color: var(--cgi-blue);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.wallet-pill-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wallet-pill-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.wallet-pill-address {
+  color: var(--cgi-blue);
+  margin-left: 2px;
+}
 
 
 /* ===== DASHBOARD ===== */
