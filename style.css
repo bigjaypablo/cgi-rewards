@@ -377,7 +377,7 @@ body {
 /* ===== activity table — recent referral signups showing in the dashboard (wallet/name, date, points earned) ===== */
 .activity-section {
   max-width: 480px;
-  margin: 0 auto;
+  margin: 16px auto 0;
   padding: 0 20px 40px;
 }
 
@@ -425,4 +425,182 @@ body {
 .points-cell {
   color: var(--cgi-blue);
   font-weight: 600;
+}
+
+
+
+/* ===== HEADER CARD ===== */
+.header-card {
+  max-width: 480px;
+  margin: 20px auto 0;
+  padding: 20px;
+  background: var(--cgi-bg-light);
+  border-radius: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+@media (min-width: 520px) {
+  .header-card { margin-left: auto; margin-right: auto; }
+}
+
+.greeting {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.mini-stats-row {
+  display: flex;
+  gap: 24px;
+  margin-top: 14px;
+}
+
+.mini-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mini-stat-label {
+  font-size: 11px;
+  color: var(--cgi-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.mini-stat-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.mini-stat-green {
+  color: #16a34a;
+}
+
+/* ===== DASHBOARD TABS ===== */
+.dash-tabs {
+  display: flex;
+  gap: 6px;
+  max-width: 480px;
+  margin: 20px auto 0;
+  padding: 0 20px;
+}
+
+.dash-tab-btn {
+  flex: 1;
+  background: var(--cgi-bg-light);
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--cgi-text-muted);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.dash-tab-btn.active {
+  background: var(--cgi-blue);
+  color: var(--cgi-white);
+}
+
+/* ===== CHART SECTION ===== */
+.chart-section {
+  max-width: 480px;
+  margin: 16px auto 0;
+  padding: 20px;
+  background: var(--cgi-bg-light);
+  border-radius: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+@media (min-width: 520px) {
+  .chart-section { margin-left: auto; margin-right: auto; }
+}
+
+.chart-header {
+  margin-bottom: 16px;
+}
+
+.chart-toggles {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.toggle-group {
+  display: flex;
+  gap: 4px;
+  background: var(--cgi-white);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.toggle-btn {
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cgi-text-muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.toggle-btn.active {
+  background: var(--cgi-blue);
+  color: var(--cgi-white);
+}
+
+/* ===== SECTION HEADER ROW (for View all) ===== */
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--cgi-blue);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ===== SOCIAL TAB ===== */
+.social-section {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.social-btn {
+  background: var(--cgi-bg-light);
+  border: none;
+  border-radius: 14px;
+  padding: 14px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.social-btn:hover {
+  background: #e6e9fb;
 }

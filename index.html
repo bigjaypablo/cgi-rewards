@@ -76,10 +76,29 @@
   <nav class="navbar">
     <div class="nav-logo">CGI<span>·</span>Rewards</div>
     <div class="wallet-pill-wrap">
-  <div class="wallet-pill" id="walletPill">—</div>
-  <button class="btn-disconnect" id="disconnectBtn">Disconnect</button>
-</div>
+      <div class="wallet-pill" id="walletPill">—</div>
+      <button class="btn-disconnect" id="disconnectBtn">Disconnect</button>
+    </div>
   </nav>
+
+  <section class="header-card">
+    <p class="greeting" id="greetingText">Good Evening 👋</p>
+    <p class="referral-label">Your Referral Link</p>
+    <div class="referral-input-row">
+      <input type="text" id="referralLink" class="referral-input" readonly value="https://rewards.cryptogrowthindex.com/ref/loading">
+      <button class="btn-copy" id="copyBtn">Copy</button>
+    </div>
+    <div class="mini-stats-row">
+      <div class="mini-stat">
+        <span class="mini-stat-label">Clicks</span>
+        <span class="mini-stat-value" id="statClicks">0</span>
+      </div>
+      <div class="mini-stat">
+        <span class="mini-stat-label">Conv.</span>
+        <span class="mini-stat-value mini-stat-green" id="statConv">0%</span>
+      </div>
+    </div>
+  </section>
 
   <section class="stats">
     <div class="stat-card">
@@ -100,36 +119,77 @@
     </div>
   </section>
 
-  <section class="referral-box">
-    <p class="referral-label">Your Referral Link</p>
-    <div class="referral-input-row">
-      <input type="text" id="referralLink" class="referral-input" readonly value="https://rewards.cryptogrowthindex.com/ref/loading">
-      <button class="btn-copy" id="copyBtn">Copy</button>
-    </div>
-  </section>
-  
-  <section class="activity-section">
-  <p class="section-label">Recent Referrals</p>
-  <div class="activity-table-wrap">
-    <table class="activity-table">
-      <thead>
-        <tr>
-          <th>Wallet</th>
-          <th>Date</th>
-          <th>Points</th>
-        </tr>
-      </thead>
-      <tbody id="activityTableBody">
-        <!-- rows injected by script.js -->
-      </tbody>
-    </table>
+  <div class="dash-tabs">
+    <button class="dash-tab-btn active" data-dashtab="overview">Overview</button>
+    <button class="dash-tab-btn" data-dashtab="referrals">My Referrals</button>
+    <button class="dash-tab-btn" data-dashtab="social">Social Links</button>
   </div>
-</section>
 
-  
-  
+  <!-- OVERVIEW TAB -->
+  <div class="dash-tab-panel" id="dashTabOverview">
+    <section class="chart-section">
+      <div class="chart-header">
+        <p class="section-label">Referral Activity</p>
+        <div class="chart-toggles">
+          <div class="toggle-group">
+            <button class="toggle-btn active" data-metric="refs">Refs</button>
+            <button class="toggle-btn" data-metric="points">Points</button>
+          </div>
+          <div class="toggle-group">
+            <button class="toggle-btn" data-range="7d">7D</button>
+            <button class="toggle-btn" data-range="30d">30D</button>
+            <button class="toggle-btn active" data-range="all">All</button>
+          </div>
+        </div>
+      </div>
+      <canvas id="activityChart" height="180"></canvas>
+    </section>
+
+    <section class="activity-section">
+      <div class="section-header-row">
+        <p class="section-label">Recent Referrals</p>
+        <button class="link-btn" id="viewAllBtn">View all →</button>
+      </div>
+      <div class="activity-table-wrap" id="recentPreviewWrap">
+        <table class="activity-table">
+          <thead>
+            <tr><th>Wallet</th><th>Date</th><th>Points</th></tr>
+          </thead>
+          <tbody id="recentPreviewBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- MY REFERRALS TAB -->
+  <div class="dash-tab-panel hidden" id="dashTabReferrals">
+    <section class="activity-section">
+      <p class="section-label">All Referrals</p>
+      <div class="activity-table-wrap">
+        <table class="activity-table">
+          <thead>
+            <tr><th>Wallet</th><th>Date</th><th>Points</th></tr>
+          </thead>
+          <tbody id="activityTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- SOCIAL LINKS TAB -->
+  <div class="dash-tab-panel hidden" id="dashTabSocial">
+    <section class="social-section">
+      <p class="section-label">Share Your Link</p>
+      <div class="social-buttons">
+        <button class="social-btn" id="shareX">Share on X</button>
+        <button class="social-btn" id="shareTelegram">Share on Telegram</button>
+      </div>
+    </section>
+  </div>
 </div>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

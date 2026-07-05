@@ -145,15 +145,11 @@ function onWalletConnected(address) {
   const shortAddress = address.slice(0, 4) + '...' + address.slice(-4);
   document.getElementById('walletPill').textContent = shortAddress;
 
-  // Mock stats — replace with real data later
-  document.getElementById('statReferrals').textContent = '47';
-  document.getElementById('statPoints').textContent = '2,340';
-  document.getElementById('statRank').textContent = '#12';
-  document.getElementById('statPending').textContent = '180';
-
-  document.getElementById('referralLink').value =
-    `https://rewards.cryptogrowthindex.com/ref/${address.slice(0, 8)}`;
+  populateDashboard(address);
 }
+
+
+
 
 // ===== COPY REFERRAL LINK =====
 document.getElementById('copyBtn').addEventListener('click', () => {
@@ -168,27 +164,7 @@ document.getElementById('copyBtn').addEventListener('click', () => {
 
 
 
-// Mock activity data — replace with real data later
-const mockActivity = [
-  { wallet: '7xKq...9pLm', date: 'Jul 4', points: 120 },
-  { wallet: '3nRt...2wZa', date: 'Jul 3', points: 80 },
-  { wallet: 'Fq8v...6cBn', date: 'Jul 2', points: 200 },
-  { wallet: '9mYh...4dEk', date: 'Jul 1', points: 60 },
-  { wallet: '2pXs...8jTr', date: 'Jun 30', points: 150 },
-];
 
-function renderActivityTable() {
-  const tbody = document.getElementById('activityTableBody');
-  tbody.innerHTML = mockActivity.map(row => `
-    <tr>
-      <td>${row.wallet}</td>
-      <td>${row.date}</td>
-      <td class="points-cell">+${row.points}</td>
-    </tr>
-  `).join('');
-}
-
-renderActivityTable();
 
 
 
@@ -201,4 +177,146 @@ document.getElementById('disconnectBtn').addEventListener('click', () => {
   dashboardView.classList.add('hidden');
   landingView.classList.remove('hidden');
   document.getElementById('walletPill').textContent = '—';
+});
+
+
+
+
+// ===== MOCK DATA =====
+const mockActivity = [
+  { wallet: '7xKq...9pLm', date: 'Jul 4', points: 120 },
+  { wallet: '3nRt...2wZa', date: 'Jul 3', points: 80 },
+  { wallet: 'Fq8v...6cBn', date: 'Jul 2', points: 200 },
+  { wallet: '9mYh...4dEk', date: 'Jul 1', points: 60 },
+  { wallet: '2pXs...8jTr', date: 'Jun 30', points: 150 },
+];
+
+const chartLabels = ['May 7', 'May 15', 'May 23', 'May 31', 'Jun 8', 'Jun 16', 'Jun 24', 'Jul 2'];
+const chartDataRefs = [0, 1, 0, 2, 1, 3, 2, 4];
+const chartDataPoints = [0, 40, 0, 90, 60, 140, 100, 180];
+
+// ===== POPULATE DASHBOARD (called after wallet connects) =====
+function populateDashboard(address) {
+  document.getElementById('statReferrals').textContent = '47';
+  document.getElementById('statPoints').textContent = '2,340';
+  document.getElementById('statRank').textContent = '#12';
+  document.getElementById('statPending').textContent = '180';
+  document.getElementById('statClicks').textContent = '312';
+  document.getElementById('statConv').textContent = '15%';
+
+  document.getElementById('referralLink').value =
+    `https://rewards.cryptogrowthindex.com/ref/${address.slice(0, 8)}`;
+
+  // Recent referrals preview (top 3)
+  const previewBody = document.getElementById('recentPreviewBody');
+  previewBody.innerHTML = mockActivity.slice(0, 3).map(row => `
+    <tr>
+      <td>${row.wallet}</td>
+      <td>${row.date}</td>
+      <td class="points-cell">+${row.points}</td>
+    </tr>
+  `).join('');
+
+  // Full referrals table
+  const fullBody = document.getElementById('activityTableBody');
+  fullBody.innerHTML = mockActivity.map(row => `
+    <tr>
+      <td>${row.wallet}</td>
+      <td>${row.date}</td>
+      <td class="points-cell">+${row.points}</td>
+    </tr>
+  `).join('');
+
+  renderChart('refs');
+}
+
+// ===== CHART =====
+let activityChart = null;
+
+function renderChart(metric) {
+  const ctx = document.getElementById('activityChart');
+  const data = metric === 'refs' ? chartDataRefs : chartDataPoints;
+
+  if (activityChart) activityChart.destroy();
+
+  activityChart = new Chart(ctx, {
+    type: currentChartType,
+    data: {
+      labels: chartLabels,
+      datasets: [{
+        label: metric === 'refs' ? 'Referrals' : 'Points',
+        data: data,
+        backgroundColor: 'rgba(59, 55, 242, 0.5)',
+        borderColor: '#3b37f2',
+        borderWidth: 2,
+        tension: 0.3,
+        fill: currentChartType === 'line',
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#eceefc' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+}
+
+let currentChartType = 'bar';
+let currentMetric = 'refs';
+
+// Metric toggle (Refs / Points)
+document.querySelectorAll('.toggle-btn[data-metric]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.toggle-btn[data-metric]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMetric = btn.dataset.metric;
+    renderChart(currentMetric);
+  });
+});
+
+// Range toggle (7D / 30D / All) — mock: just re-renders same data for now
+document.querySelectorAll('.toggle-btn[data-range]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.toggle-btn[data-range]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderChart(currentMetric);
+  });
+});
+
+// ===== DASHBOARD TAB SWITCHING =====
+const dashTabButtons = document.querySelectorAll('.dash-tab-btn');
+const dashPanels = {
+  overview: document.getElementById('dashTabOverview'),
+  referrals: document.getElementById('dashTabReferrals'),
+  social: document.getElementById('dashTabSocial'),
+};
+
+dashTabButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    dashTabButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    Object.values(dashPanels).forEach(p => p.classList.add('hidden'));
+    dashPanels[btn.dataset.dashtab].classList.remove('hidden');
+  });
+});
+
+// "View all" jumps to My Referrals tab
+document.getElementById('viewAllBtn').addEventListener('click', () => {
+  document.querySelector('.dash-tab-btn[data-dashtab="referrals"]').click();
+});
+
+// ===== SOCIAL SHARE =====
+document.getElementById('shareX').addEventListener('click', () => {
+  const link = document.getElementById('referralLink').value;
+  const text = encodeURIComponent(`Join me on CGI Rewards! ${link}`);
+  window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+});
+
+document.getElementById('shareTelegram').addEventListener('click', () => {
+  const link = document.getElementById('referralLink').value;
+  window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}`, '_blank');
 });
