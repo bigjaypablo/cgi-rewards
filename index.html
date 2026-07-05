@@ -75,7 +75,10 @@
 <div id="dashboardView" class="hidden">
   <nav class="navbar">
     <div class="nav-logo">CGI<span>·</span>Rewards</div>
-    <div class="wallet-pill" id="walletPill">—</div>
+    <div class="wallet-pill-wrap">
+  <div class="wallet-pill" id="walletPill">—</div>
+  <button class="btn-disconnect" id="disconnectBtn">Disconnect</button>
+</div>
   </nav>
 
   <section class="stats">
@@ -104,6 +107,27 @@
       <button class="btn-copy" id="copyBtn">Copy</button>
     </div>
   </section>
+  
+  <section class="activity-section">
+  <p class="section-label">Recent Referrals</p>
+  <div class="activity-table-wrap">
+    <table class="activity-table">
+      <thead>
+        <tr>
+          <th>Wallet</th>
+          <th>Date</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody id="activityTableBody">
+        <!-- rows injected by script.js -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+  
+  
 </div>
 
 <script src="script.js"></script>

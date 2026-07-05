@@ -58,6 +58,9 @@ const walletButtons = document.querySelectorAll('.wallet-option');
 walletButtons.forEach(btn => {
   btn.addEventListener('click', async () => {
     const wallet = btn.dataset.wallet;
+    const originalContent = btn.innerHTML;
+    btn.innerHTML = `<span class="wallet-spinner"></span><span>Connecting...</span>`;
+    btn.disabled = true;
 
     try {
       let address = null;
@@ -68,6 +71,8 @@ walletButtons.forEach(btn => {
           address = resp.publicKey.toString();
         } else {
           alert('Phantom not detected. Install it to continue.');
+          btn.innerHTML = originalContent;
+          btn.disabled = false;
           return;
         }
       }
@@ -78,6 +83,8 @@ walletButtons.forEach(btn => {
           address = window.solflare.publicKey.toString();
         } else {
           alert('Solflare not detected. Install it to continue.');
+          btn.innerHTML = originalContent;
+          btn.disabled = false;
           return;
         }
       }
@@ -88,6 +95,8 @@ walletButtons.forEach(btn => {
           address = resp.publicKey.toString();
         } else {
           alert('Backpack not detected. Install it to continue.');
+          btn.innerHTML = originalContent;
+          btn.disabled = false;
           return;
         }
       }
@@ -98,6 +107,8 @@ walletButtons.forEach(btn => {
           address = accounts[0];
         } else {
           alert('MetaMask not detected. Install it to continue.');
+          btn.innerHTML = originalContent;
+          btn.disabled = false;
           return;
         }
       }
@@ -108,6 +119,8 @@ walletButtons.forEach(btn => {
           address = accounts[0];
        } else {
          alert(`${wallet === 'trustwallet' ? 'Trust Wallet' : 'Coinbase Wallet'} not detected. Install it to continue.`);
+         btn.innerHTML = originalContent;
+         btn.disabled = false;
          return;
        }
      }
@@ -154,3 +167,38 @@ document.getElementById('copyBtn').addEventListener('click', () => {
 
 
 
+
+// Mock activity data — replace with real data later
+const mockActivity = [
+  { wallet: '7xKq...9pLm', date: 'Jul 4', points: 120 },
+  { wallet: '3nRt...2wZa', date: 'Jul 3', points: 80 },
+  { wallet: 'Fq8v...6cBn', date: 'Jul 2', points: 200 },
+  { wallet: '9mYh...4dEk', date: 'Jul 1', points: 60 },
+  { wallet: '2pXs...8jTr', date: 'Jun 30', points: 150 },
+];
+
+function renderActivityTable() {
+  const tbody = document.getElementById('activityTableBody');
+  tbody.innerHTML = mockActivity.map(row => `
+    <tr>
+      <td>${row.wallet}</td>
+      <td>${row.date}</td>
+      <td class="points-cell">+${row.points}</td>
+    </tr>
+  `).join('');
+}
+
+renderActivityTable();
+
+
+
+
+
+
+
+// disconnect button 
+document.getElementById('disconnectBtn').addEventListener('click', () => {
+  dashboardView.classList.add('hidden');
+  landingView.classList.remove('hidden');
+  document.getElementById('walletPill').textContent = '—';
+});

@@ -58,14 +58,49 @@ body {
   cursor: pointer;
 }
 
-.wallet-pill {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  background: var(--cgi-bg-light);
-  color: var(--cgi-blue);
-  padding: 8px 14px;
-  border-radius: 999px;
+.wallet-pill-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+
+.btn-disconnect {
+  background: transparent;
+  border: 1px solid rgba(59, 55, 242, 0.2);
+  color: var(--cgi-text-muted);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn-disconnect:hover {
+  background: rgba(59, 55, 242, 0.08);
+  color: var(--cgi-blue);
+}
+
+
+.wallet-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(59, 55, 242, 0.2);
+  border-top-color: var(--cgi-blue);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+
+
+
 
 /* ===== HERO (full screen) ===== */
 .hero {
@@ -332,4 +367,62 @@ body {
   font-weight: 600;
   font-size: 13px;
   cursor: pointer;
+}
+
+
+
+
+
+
+/* ===== activity table — recent referral signups showing in the dashboard (wallet/name, date, points earned) ===== */
+.activity-section {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+}
+
+.section-label {
+  font-size: 13px;
+  color: var(--cgi-text-muted);
+  margin-bottom: 10px;
+}
+
+.activity-table-wrap {
+  background: var(--cgi-bg-light);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.activity-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.activity-table th {
+  text-align: left;
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--cgi-text-muted);
+  padding: 12px 14px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid rgba(59, 55, 242, 0.08);
+}
+
+.activity-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(59, 55, 242, 0.06);
+  font-family: var(--font-mono);
+  color: var(--cgi-text-dark);
+}
+
+.activity-table tr:last-child td {
+  border-bottom: none;
+}
+
+.points-cell {
+  color: var(--cgi-blue);
+  font-weight: 600;
 }
