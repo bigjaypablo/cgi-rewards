@@ -134,12 +134,16 @@ walletButtons.forEach(btn => {
           trustwallet: 'bnb',
           coinbase: 'base',
         };
+        btn.innerHTML = originalContent;
+        btn.disabled = false;
         onWalletConnected(address, wallet, networkMap[wallet]);
       }
 
     } catch (err) {
       console.error('Wallet connection failed:', err);
       alert('Connection failed or was rejected.');
+      btn.innerHTML = originalContent;
+      btn.disabled = false;
     }
   });
 });
