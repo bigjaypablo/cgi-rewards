@@ -159,11 +159,25 @@ function onWalletConnected(address, walletName, network) {
       document.getElementById('walletPillNetwork').innerHTML = svg;
     });
 
+  fetch(`network-icons/${network}.svg`)
+    .then(res => {
+      if (!res.ok) throw new Error(`Network icon fetch failed: ${res.status} for network-icons/${network}.svg`);
+      return res.text();
+    })
+    .then(svg => {
+      document.getElementById('walletPillNetwork').innerHTML = svg;
+    })
+    .catch(err => alert(err.message));
+
   fetch(`wallet-icons/${walletName}.svg`)
-    .then(res => res.text())
+    .then(res => {
+      if (!res.ok) throw new Error(`Wallet icon fetch failed: ${res.status} for wallet-icons/${walletName}.svg`);
+      return res.text();
+    })
     .then(svg => {
       document.getElementById('walletPillWallet').innerHTML = svg;
-    });
+    })
+    .catch(err => alert(err.message));
 
   populateDashboard(address);
 }
