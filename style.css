@@ -363,7 +363,9 @@ body {
 }
 
 .logout-icon {
-  font-size: 13px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 
