@@ -76,12 +76,24 @@
   <nav class="navbar">
     <div class="nav-logo">CGI<span>·</span>Rewards</div>
     <div class="wallet-pill-wrap">
-     <div class="wallet-pill" id="walletPill">
-  <span class="wallet-pill-icon" id="walletPillNetwork"></span>
-  <span class="wallet-pill-icon" id="walletPillWallet"></span>
-  <span class="wallet-pill-address" id="walletPillAddress">—</span>
-</div>
-      <button class="btn-disconnect" id="disconnectBtn">Disconnect</button>
+      <button class="wallet-pill" id="walletPill">
+        <span class="wallet-pill-icon" id="walletPillNetwork"></span>
+        <span class="wallet-pill-icon" id="walletPillWallet"></span>
+        <span class="wallet-pill-address" id="walletPillAddress">—</span>
+      </button>
+
+      <div class="wallet-dropdown hidden" id="walletDropdown">
+        <button class="dropdown-item" id="copyAddressBtn">
+          <span>Copy Address</span>
+        </button>
+        <button class="dropdown-item" id="switchWalletBtn">
+          <span>Switch Wallet</span>
+        </button>
+        <button class="dropdown-item dropdown-item-danger" id="disconnectBtn">
+          <span>Disconnect</span>
+          <span class="logout-icon">→]</span>
+        </button>
+      </div>
     </div>
   </nav>
 

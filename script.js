@@ -153,11 +153,7 @@ function onWalletConnected(address, walletName, network) {
   const shortAddress = address.slice(0, 4) + '...' + address.slice(-4);
   document.getElementById('walletPillAddress').textContent = shortAddress;
 
-  fetch(`network-icons/${network}.svg`)
-    .then(res => res.text())
-    .then(svg => {
-      document.getElementById('walletPillNetwork').innerHTML = svg;
-    });
+  
 
   fetch(`network-icons/${network}.svg`)
     .then(res => {
@@ -206,8 +202,33 @@ document.getElementById('copyBtn').addEventListener('click', () => {
 
 
 
-// disconnect button 
+// ===== WALLET PILL DROPDOWN =====
+const walletPill = document.getElementById('walletPill');
+const walletDropdown = document.getElementById('walletDropdown');
+
+walletPill.addEventListener('click', () => {
+  walletDropdown.classList.toggle('hidden');
+});
+
+document.addEventListener('click', (e) => {
+  if (!walletPill.contains(e.target) && !walletDropdown.contains(e.target)) {
+    walletDropdown.classList.add('hidden');
+  }
+});
+
+document.getElementById('copyAddressBtn').addEventListener('click', () => {
+  const address = document.getElementById('walletPillAddress').textContent;
+  navigator.clipboard.writeText(address);
+  walletDropdown.classList.add('hidden');
+});
+
+document.getElementById('switchWalletBtn').addEventListener('click', () => {
+  walletDropdown.classList.add('hidden');
+  openModal();
+});
+
 document.getElementById('disconnectBtn').addEventListener('click', () => {
+  walletDropdown.classList.add('hidden');
   dashboardView.classList.add('hidden');
   landingView.classList.remove('hidden');
   document.getElementById('walletPillAddress').textContent = '—';
